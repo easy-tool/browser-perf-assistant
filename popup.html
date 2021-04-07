@@ -1,0 +1,89 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        .button {
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: #dedede;
+        padding: 5px 32px;
+        width:240px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        transition-duration: 0.4s;
+        }
+
+        .button2:hover {
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+        }
+
+        body {
+        background-color: black;
+        color: #aaaaaa;
+        margin: 20;
+        }
+        html {
+        height:99vh;
+	margin: -9;
+        }
+	
+	.PercMon {
+        background-color: rgba(0, 255, 0, 0.2); /* Green */
+        border: none;
+        color: #dedede;
+        text-align: center;
+        font-size: 20px;
+        }
+
+	.PercMonRed {
+        background-color: rgba(255, 0, 0, 0.2); /* Red */
+        border: none;
+        color: #dedede;
+        text-align: center;
+        font-size: 20px;
+        }
+    </style>
+</head>
+    <body>
+	<Div>
+	<Div>
+        <Div>
+        <p></p><p></p>
+            <Table border=0 cellpadding=3 width=750>
+                <TR align=center style="font-weight: bold;"><TD>浏览器版本</TD><TD>打开的浏览器窗口</TD><TD>打开的浏览器 Tab</TD><TD>网络状态</TD></TR>
+                <TR align=center><TD id="verChrome"></TD><TD id="cTwin"></TD><TD id="cTtabs"></TD><TD id="ntwTabs"></TD></TR>
+            </Table>
+        <p></p><p></p>
+
+        <Table border=0 cellpadding=3 width=730>
+            <Tr align=center style="font-weight: bold;">
+                <Td width=30%>内存 详情</td><Td rowspan=2 class="PercMon" id="MemUtil"> 90% </TD><td>CPU 详情</Td><Td id="CpuUtil" rowspan=2 class="PercMon"> 90% </TD>
+		
+            </Tr>
+            <Tr align=center>
+                <Td id="MemDetail"></td><Td id="CpuDetail"></Td>
+            </Tr>
+            <Tr style="display:none" align=center style="font-weight:bold;font-size: 25px important!;">
+                <Td>Memory 使用:</td><Td rowspan=2> 90% </TD><td>CPU 使用:</Td>
+            </Tr>
+            <Tr style="display:none" align=center>
+                <Td ></td><Td ></Td>
+            </Tr>
+        </Table>
+        <p></p>
+
+            <canvas id="myChart" height="200" width="750"></canvas>
+            <p></p>
+            <button id="ReleaseMem" class="button button2">释放 内存/CPU</button>&nbsp;
+            <button id="ClearCache" class="button button2">清除 浏览器数据</button>&nbsp;
+	    <button id="ResetChrome" class="button button2">重置 浏览器</button>
+         </Div>
+	<div id="status"></div>
+	<script src="Chart.bundle.min.js"></script>
+    <script src="popup.js"></script>
+    </body>
+</html>

@@ -16,8 +16,21 @@ function draw() {
 			}
 			usedPers = Math.round(usedPers/info.numOfProcessors);
 			let strColor = "green";
-			if (usedPers > 90) {
+			if (usedPers > 80) {
 				strColor = "red";
+				// https://stackoverflow.com/questions/65545056/migration-chrome-extension-v3-notification/65824854#65824854
+				// chrome.notifications.create('perf-cpu-notify', {
+				// 	type: "basic",
+				// 	title: "性能优化助手提醒",
+				// 	message: "您的CPU负载过高，可能会导致网页卡顿！",
+				// 	iconUrl: "icon.png"
+				//   }, (notificationId) => {
+				// 	  console.log(notificationId);
+				//   });
+				registration.showNotification("温馨提醒", {
+					body: "您的CPU负载过高，可能会导致网页卡顿，请及时处理！",
+					icon: "icon.png"
+				  })
 			}
 			if (usedPers < 10) {
 				usedPers = "0"+ usedPers;

@@ -175,12 +175,12 @@ function clearBrowserData(){
 			isStorage = true;
 		}
 		if (!isStorage) {
-			let strConfirm = confirm("You have not set up browser clean up options yet. Please click 'OK' to set up your prefrences OR click 'Cancel' to continue with default options.");
+			let strConfirm = confirm("您还没有设置要清除数据的配置项，请点击 'OK' 去配置或点击 'Cancel' 采用默认配置。");
 			if (strConfirm) {
 				chrome.runtime.openOptionsPage();
 			}
 		}
-		document.getElementById('status').textContent = "Browser Clean Up In Progress..........";
+		document.getElementById('status').textContent = "清理数据中......";
 		options = JSON.parse(clearOption);
 		let TimeRange = 1000 * 60 * 60 * obj.ClearBrowserTimeRange;
 		if (TimeRange == 0) {

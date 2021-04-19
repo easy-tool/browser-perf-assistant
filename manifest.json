@@ -1,18 +1,24 @@
 {
-    "name": "性能优化助手",
-    "description": "性能优化助手提供释放不活跃的内存和CPU占用，清除浏览器数据等功能。",
-    "version": "1.0",
-    "manifest_version": 3,
-    "background": {
-       "service_worker": "background.js"
-    },
-    "permissions": [ "system.memory", "system.cpu", "storage", "browsingData", "alarms" ],
-    "action": {
-       "default_icon": "icon.png",
-       "default_popup": "popup.html"
-    },
-    "icons": {
-       "128": "icon.png"
-    },
-    "options_page": "options.html"
+   "name": "性能优化助手",
+   "description": "性能优化助手提供释放不活跃的内存和CPU占用，清除浏览器数据等功能。",
+   "version": "1.0",
+   "manifest_version": 3,
+   "background": {
+      "service_worker": "background.js"
+   },
+   "permissions": [ "system.memory", "system.cpu", "storage", "browsingData", "alarms", "notifications" ],
+   "action": {
+      "default_icon": "icon.png",
+      "default_popup": "popup.html"
+   },
+   "icons": {
+      "128": "icon.png"
+   },
+   "options_page": "options.html",
+   "content_scripts": [
+     {
+       "matches": ["http://*/*", "https://*/*"],
+       "js": ["monitor.js"]
+     }
+   ]
 }

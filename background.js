@@ -55,6 +55,25 @@ function draw() {
 	});
 }
 
+function monitorNet() {
+	const request = new Request('https://cn.bing.com/sa/simg/favicon-2x.ico',{cache: 'no-store'});
+	fetch(request)
+		.then(response => {
+			if (response.status === 200) {
+				console.log(response);
+			} else {
+				throw new Error('服务出错！');
+			}
+		})
+		.catch(error => {
+			console.error(error);
+			registration.showNotification("温馨提醒", {
+				body: "您的网络不稳定，请检查网络连接！",
+				icon: "icon.png"
+			  })
+		});
+}
+
 chrome.runtime.onInstalled.addListener(() => {
 	chrome.alarms.get('alarm', a => {
 		if (!a) {
@@ -63,4 +82,7 @@ chrome.runtime.onInstalled.addListener(() => {
 	});
 });
 
-chrome.alarms.onAlarm.addListener(draw);
+chrome.alarms.onAlarm.addListener(() => {
+	draw();
+	monitorNet();
+});

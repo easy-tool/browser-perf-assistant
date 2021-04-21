@@ -1,13 +1,35 @@
 console.info("欢迎使用性能优化助手");
 
+let cls = 0;
 const observer = new PerformanceObserver(function(list) {
     const perfEntries = list.getEntries();
-    for (let i = 0; i < perfEntries.length; i++) {
-        console.log(perfEntries[i])
+    for (const entry of perfEntries) {
+        switch (entry.entryType) {
+            case 'largest-contentful-paint':
+                console.log('LCP: ', entry.startTime, entry);
+                break;
+            case 'first-input':
+                const delay = entry.processingStart - entry.startTime;
+                console.log('FID: ', delay, entry);
+                break;
+            case 'layout-shift':
+                if (!entry.hadRecentInput) {
+                    cls += entry.value;
+                    console.log('CLS: ', cls, entry);
+                }
+                break;
+            case 'longtask':
+                console.log('LongTask: ', entry.duration, entry);
+                break;
+            default:
+                console.log(entry.entryType, entry);
+        }
     }
 });
-// longtask: any uninterrupted period where the main UI thread is busy for 50 ms or longer
-observer.observe({entryTypes: ["longtask", "largest-contentful-paint", "layout-shift"]});
+observer.observe({
+    // longtask: any uninterrupted period where the main UI thread is busy for 50 ms or longer
+    entryTypes: ["longtask", "largest-contentful-paint", "first-input", "layout-shift"]
+});
 
 function measureFPS(report) {
     const samplesSize = 120;
@@ -50,5 +72,7 @@ function measureFPS(report) {
 }
 
 measureFPS(fps => {
-    console.log("fps: ", fps);
+    if ( fps < 55 || fps > 65) {
+        console.log("FPS: ", fps);
+    }
 })

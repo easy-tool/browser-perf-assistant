@@ -6,7 +6,17 @@
    "background": {
       "service_worker": "background.js"
    },
-   "permissions": [ "system.memory", "system.cpu", "storage", "browsingData", "alarms", "notifications" ],
+   "declarative_net_request": {
+     "rule_resources": [{
+       "id": "ruleset_1",
+       "enabled": true,
+       "path": "rules.json"
+     }]
+   },
+   "permissions": [ "system.memory", "system.cpu", "storage", "browsingData", "alarms", "notifications", "declarativeNetRequest" ],
+   "host_permissions": [
+     "https://*/*"
+   ],
    "action": {
       "default_icon": "icon.png",
       "default_popup": "popup.html"

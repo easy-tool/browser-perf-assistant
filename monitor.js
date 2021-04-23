@@ -15,7 +15,9 @@ const observer = new PerformanceObserver(function(list) {
             case 'layout-shift':
                 if (!entry.hadRecentInput) {
                     cls += entry.value;
-                    console.log('CLS: ', cls, entry);
+                    if (cls > 0.15) {
+                        console.log('CLS: ', cls, entry);
+                    }
                 }
                 break;
             case 'longtask':
@@ -76,3 +78,37 @@ measureFPS(fps => {
         console.log("FPS: ", fps);
     }
 })
+
+
+function measurementInterval() {
+    const MEAN_INTERVAL_IN_MS = 5 * 60 * 1000;
+    return -Math.log(Math.random()) * MEAN_INTERVAL_IN_MS;
+}
+async function performMeasurement() {
+    let result;
+    try {
+        result = await performance.measureUserAgentSpecificMemory();
+    } catch (error) {
+        // https://web.dev/why-coop-coep
+        if (error instanceof DOMException &&
+            error.name === "SecurityError") {
+            console.log("The context is not secure.");
+            return;
+        }
+        throw error;
+    }
+    console.log("Memory usage:", result);
+    scheduleMeasurement();
+}
+function scheduleMeasurement() {
+    if (!performance.measureUserAgentSpecificMemory) {
+        console.log("performance.measureUserAgentSpecificMemory() is not available.");
+        return;
+    }
+    const interval = measurementInterval();
+    console.log("Scheduling memory measurement in " + Math.round(interval / 1000) + " seconds.");
+    setTimeout(performMeasurement, interval);
+}
+window.onload = function () {
+    scheduleMeasurement();
+}
